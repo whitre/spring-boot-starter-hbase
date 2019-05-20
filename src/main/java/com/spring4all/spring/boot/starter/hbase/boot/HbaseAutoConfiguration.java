@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.StringUtils;
 
 /**
  * JThink@JThink
@@ -23,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 public class HbaseAutoConfiguration {
 
     private static final String HBASE_QUORUM = "hbase.zookeeper.quorum";
+    private static final String HBASE_PORT = "hbase.zookeeper.property.clientPort";
     private static final String HBASE_ROOTDIR = "hbase.rootdir";
     private static final String HBASE_ZNODE_PARENT = "zookeeper.znode.parent";
 
@@ -34,9 +36,12 @@ public class HbaseAutoConfiguration {
     @ConditionalOnMissingBean(HbaseTemplate.class)
     public HbaseTemplate hbaseTemplate() {
         Configuration configuration = HBaseConfiguration.create();
-        configuration.set(HBASE_QUORUM, this.hbaseProperties.getQuorum());
+        configuration.set(HBASE_QUORUM, hbaseProperties.getQuorum());
+        configuration.set(HBASE_PORT, hbaseProperties.getPort());
         configuration.set(HBASE_ROOTDIR, hbaseProperties.getRootDir());
-        configuration.set(HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
+        if (StringUtils.hasText(hbaseProperties.getNodeParent())) {
+            configuration.set(HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
+        }
         return new HbaseTemplate(configuration);
     }
 }

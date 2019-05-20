@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.spring4all</groupId>
+    <groupId>com.sitech.isf</groupId>
     <artifactId>spring-boot-starter-hbase</artifactId>
     <version>1.0.0.RELEASE</version>
 
@@ -92,10 +92,30 @@
 
     <repositories>
         <repository>
-            <id>cloudera repository</id>
-            <url>https://repository.cloudera.com/artifactory/cloudera-repos</url>
+            <id>nexus</id>
+            <name>nexus</name>
+            <url>http://172.21.10.35:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>si-releases</id>
+            <name>Si-tech Project Release</name>
+            <url>http://172.21.10.35:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>si-snapshots</id>
+            <name>Si-tech Project SNAPSHOTS</name>
+            <url>http://172.21.10.35:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>

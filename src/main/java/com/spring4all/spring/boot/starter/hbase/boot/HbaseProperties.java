@@ -14,6 +14,8 @@ public class HbaseProperties {
 
     private String quorum;
 
+    private String port = "2181";
+
     private String rootDir;
 
     private String nodeParent;
@@ -24,6 +26,14 @@ public class HbaseProperties {
 
     public void setQuorum(String quorum) {
         this.quorum = quorum;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
     }
 
     public String getRootDir() {
