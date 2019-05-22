@@ -1,6 +1,7 @@
 package com.spring4all.spring.boot.starter.hbase.boot;
 
 import com.spring4all.spring.boot.starter.hbase.api.HbaseTemplate;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,17 @@ public class HbaseAutoConfiguration {
     @ConditionalOnMissingBean(HbaseTemplate.class)
     public HbaseTemplate hbaseTemplate() {
         Configuration configuration = HBaseConfiguration.create();
-        configuration.set(HBASE_QUORUM, hbaseProperties.getQuorum());
-        configuration.set(HBASE_PORT, hbaseProperties.getPort());
-        configuration.set(HBASE_ROOTDIR, hbaseProperties.getRootDir());
-        if (StringUtils.hasText(hbaseProperties.getNodeParent())) {
-            configuration.set(HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
+        if (CollectionUtils.isNotEmpty(hbaseProperties.getResources())) {
+            for (String resource : hbaseProperties.getResources()) {
+                configuration.addResource(resource);
+            }
+        } else {
+            configuration.set(HBASE_QUORUM, hbaseProperties.getQuorum());
+            configuration.set(HBASE_PORT, hbaseProperties.getPort());
+            configuration.set(HBASE_ROOTDIR, hbaseProperties.getRootDir());
+            if (StringUtils.hasText(hbaseProperties.getNodeParent())) {
+                configuration.set(HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
+            }
         }
         return new HbaseTemplate(configuration);
     }

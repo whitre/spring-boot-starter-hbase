@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>hbase.client.write.buffer</name>
+        <value>62914560</value>
+    </property>
+    <property>
+        <name>hbase.client.pause</name>
+        <value>1000</value>
+    </property>
+    <property>
+        <name>hbase.client.retries.number</name>
+        <value>3</value>
+    </property>
+    <property>
+        <name>hbase.client.scanner.caching</name>
+        <value>20</value>
+    </property>
+    <property>
+        <name>hbase.client.keyvalue.maxsize</name>
+        <value>62914560</value>
+    </property>
+    <property>
+        <name>hbase.rpc.timeout</name>
+        <value>60000</value>
+    </property>
+    <property>
+        <name>hbase.security.authentication</name>
+        <value>simple</value>
+    </property>
+    <property>
+        <name>zookeeper.session.timeout</name>
+        <value>60000</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.quorum</name>
+        <value>172.21.10.112:2181,172.21.10.113:2181,172.21.10.114:2181</value>
+    </property>
+    <property>
+        <name>hbase.zookeeper.property.clientPort</name>
+        <value>2181</value>
+    </property>
+</configuration>

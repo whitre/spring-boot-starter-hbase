@@ -2,6 +2,8 @@ package com.spring4all.spring.boot.starter.hbase.boot;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
+
 /**
  * JThink@JThink
  *
@@ -19,6 +21,8 @@ public class HbaseProperties {
     private String rootDir;
 
     private String nodeParent;
+
+    private List<String> resources;
 
     public String getQuorum() {
         return quorum;
@@ -50,5 +54,13 @@ public class HbaseProperties {
 
     public void setNodeParent(String nodeParent) {
         this.nodeParent = nodeParent;
+    }
+
+    public List<String> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<String> resources) {
+        this.resources = resources;
     }
 }
