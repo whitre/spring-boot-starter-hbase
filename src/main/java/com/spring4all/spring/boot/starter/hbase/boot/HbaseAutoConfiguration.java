@@ -1,7 +1,6 @@
 package com.spring4all.spring.boot.starter.hbase.boot;
 
 import com.spring4all.spring.boot.starter.hbase.api.HbaseTemplate;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
@@ -37,7 +37,7 @@ public class HbaseAutoConfiguration {
     @ConditionalOnMissingBean(HbaseTemplate.class)
     public HbaseTemplate hbaseTemplate() {
         Configuration configuration = HBaseConfiguration.create();
-        if (CollectionUtils.isNotEmpty(hbaseProperties.getResources())) {
+        if (!CollectionUtils.isEmpty(hbaseProperties.getResources())) {
             for (String resource : hbaseProperties.getResources()) {
                 configuration.addResource(resource);
             }

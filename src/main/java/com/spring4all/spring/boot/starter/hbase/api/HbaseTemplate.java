@@ -1,6 +1,5 @@
 package com.spring4all.spring.boot.starter.hbase.api;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
@@ -9,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.StopWatch;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @author Costin Leau
  * @author Shaun Elliott
  */
+
 /**
  * JThink@JThink
  *
@@ -127,12 +128,11 @@ public class HbaseTemplate implements HbaseOperations {
             @Override
             public T doInTable(Table table) throws Throwable {
                 Get get = new Get(Bytes.toBytes(rowName));
-                if (StringUtils.isNotBlank(familyName)) {
+                if (StringUtils.hasText(familyName)) {
                     byte[] family = Bytes.toBytes(familyName);
-                    if (StringUtils.isNotBlank(qualifier)) {
+                    if (StringUtils.hasText(qualifier)) {
                         get.addColumn(family, Bytes.toBytes(qualifier));
-                    }
-                    else {
+                    } else {
                         get.addFamily(family);
                     }
                 }

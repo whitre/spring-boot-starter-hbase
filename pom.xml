@@ -66,10 +66,9 @@
         </dependency>
         <dependency>
             <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-client</artifactId>
+            <artifactId>hbase-shaded-client</artifactId>
             <version>2.1.4</version>
         </dependency>
-
 
         <dependency>
             <groupId>junit</groupId>
