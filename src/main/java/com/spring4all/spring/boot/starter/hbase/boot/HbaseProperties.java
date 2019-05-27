@@ -3,6 +3,7 @@ package com.spring4all.spring.boot.starter.hbase.boot;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * JThink@JThink
@@ -21,6 +22,8 @@ public class HbaseProperties {
     private String rootDir;
 
     private String nodeParent;
+
+    private Map<String, String> config;
 
     private List<String> resources;
 
@@ -54,6 +57,14 @@ public class HbaseProperties {
 
     public void setNodeParent(String nodeParent) {
         this.nodeParent = nodeParent;
+    }
+
+    public Map<String, String> getConfig() {
+        return config;
+    }
+
+    public void setConfig(Map<String, String> config) {
+        this.config = config;
     }
 
     public List<String> getResources() {

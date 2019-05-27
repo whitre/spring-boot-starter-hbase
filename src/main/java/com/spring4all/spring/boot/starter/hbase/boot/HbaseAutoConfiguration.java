@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
+
 /**
  * JThink@JThink
  *
@@ -47,6 +49,12 @@ public class HbaseAutoConfiguration {
             configuration.set(HBASE_ROOTDIR, hbaseProperties.getRootDir());
             if (StringUtils.hasText(hbaseProperties.getNodeParent())) {
                 configuration.set(HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
+            }
+
+            if (!CollectionUtils.isEmpty(hbaseProperties.getConfig())) {
+                for (Map.Entry<String, String> entry : hbaseProperties.getConfig().entrySet()) {
+                    configuration.set(entry.getKey(), entry.getValue());
+                }
             }
         }
         return new HbaseTemplate(configuration);
