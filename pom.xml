@@ -106,6 +106,21 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+        <profile>
+            <id>nofail</id>
+            <properties>
+                <maven.test.failure.ignore>true</maven.test.failure.ignore>
+            </properties>
+        </profile>
+        <profile>
+            <id>notest</id>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>nexus</id>
