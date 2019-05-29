@@ -21,7 +21,7 @@ public class HbaseTemplateTest {
     public void saveOrUpdate() {
         Put put = new Put(Bytes.toBytes("file0111111"));
         put.addColumn(Bytes.toBytes("INFO"), Bytes.toBytes("FILE"), Bytes.toBytes("valuexxxx"));
-        hbaseTemplate.saveOrUpdate("WSG_UPLOAD_FILE_INFO", put);
+        hbaseTemplate.saveOrUpdate("WSG_UPLOAD_FILE_INFOxxx", put);
     }
 
     @Test

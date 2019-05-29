@@ -60,10 +60,12 @@ public class HbaseTemplate implements HbaseOperations {
         } catch (Throwable throwable) {
             throw new HbaseSystemException(throwable);
         } finally {
+            if (sw.isRunning()) {
+                sw.stop();
+            }
             if (null != table) {
                 try {
                     table.close();
-                    sw.stop();
                 } catch (IOException e) {
                     LOGGER.error("hbase资源释放失败");
                 }
@@ -154,15 +156,16 @@ public class HbaseTemplate implements HbaseOperations {
             BufferedMutatorParams mutatorParams = new BufferedMutatorParams(TableName.valueOf(tableName));
             mutator = this.getConnection().getBufferedMutator(mutatorParams.writeBufferSize(3 * 1024 * 1024));
             action.doInMutator(mutator);
+            mutator.flush();
         } catch (Throwable throwable) {
-            sw.stop();
             throw new HbaseSystemException(throwable);
         } finally {
+            if (sw.isRunning()) {
+                sw.stop();
+            }
             if (null != mutator) {
                 try {
-                    mutator.flush();
                     mutator.close();
-                    sw.stop();
                 } catch (IOException e) {
                     LOGGER.error("hbase mutator资源释放失败");
                 }
