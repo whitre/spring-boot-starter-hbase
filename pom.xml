@@ -129,7 +129,7 @@
         <repository>
             <id>nexus</id>
             <name>nexus</name>
-            <url>http://172.21.10.35:8081/nexus/content/groups/public/</url>
+            <url>http://172.18.234.227:8081/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -143,12 +143,12 @@
         <repository>
             <id>si-releases</id>
             <name>Si-tech Project Release</name>
-            <url>http://172.21.10.35:8081/nexus/content/repositories/releases</url>
+            <url>http://172.18.234.227:8081/nexus/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>si-snapshots</id>
             <name>Si-tech Project SNAPSHOTS</name>
-            <url>http://172.21.10.35:8081/nexus/content/repositories/snapshots</url>
+            <url>http://172.18.234.227:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
