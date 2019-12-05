@@ -1,5 +1,6 @@
 package com.spring4all.spring.boot.starter.hbase.api;
 
+import com.spring4all.spring.boot.starter.hbase.constant.HbaseConstants;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
@@ -34,16 +35,16 @@ import java.util.concurrent.TimeUnit;
  * date： 2016-11-15 15:42:46
  */
 public class HbaseTemplate implements HbaseOperations {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(HbaseTemplate.class);
 
     private Configuration configuration;
-
+    private String namespace;
     private volatile Connection connection;
 
     public HbaseTemplate(Configuration configuration) {
         this.setConfiguration(configuration);
         Assert.notNull(configuration, " a valid configuration is required");
+        this.setNamespace(configuration.get(HbaseConstants.HBASE_NAMESPACE));
     }
 
     @Override
@@ -55,7 +56,7 @@ public class HbaseTemplate implements HbaseOperations {
         sw.start();
         Table table = null;
         try {
-            table = this.getConnection().getTable(TableName.valueOf(tableName));
+            table = this.getConnection().getTable(getTableName(tableName));
             return action.doInTable(table);
         } catch (Throwable throwable) {
             throw new HbaseSystemException(throwable);
@@ -153,7 +154,7 @@ public class HbaseTemplate implements HbaseOperations {
         sw.start();
         BufferedMutator mutator = null;
         try {
-            BufferedMutatorParams mutatorParams = new BufferedMutatorParams(TableName.valueOf(tableName));
+            BufferedMutatorParams mutatorParams = new BufferedMutatorParams(getTableName(tableName));
             mutator = this.getConnection().getBufferedMutator(mutatorParams.writeBufferSize(3 * 1024 * 1024));
             action.doInMutator(mutator);
             mutator.flush();
@@ -193,6 +194,14 @@ public class HbaseTemplate implements HbaseOperations {
         });
     }
 
+    private TableName getTableName(String tableName) {
+
+        if (StringUtils.hasText(this.namespace)) {
+            tableName = this.namespace + TableName.NAMESPACE_DELIM + tableName;
+        }
+        return TableName.valueOf(tableName);
+    }
+
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
@@ -221,5 +230,13 @@ public class HbaseTemplate implements HbaseOperations {
 
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
 }

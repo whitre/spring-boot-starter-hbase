@@ -13,36 +13,61 @@
   See the License for the specific language governing permissions and
   limitations under the License. See accompanying LICENSE file.
 -->
-
-<!-- Put site-specific property overrides in this file. -->
-
 <configuration>
-       <property>
-            <name>fs.defaultFS</name>
-            <value>hdfs://drmcluster</value>
-       </property>
-       <property>
-            <name>ha.zookeeper.quorum</name>
-            <value>e3base1:2181,e3base2:2181,e3base3:2181</value>
-       </property>
-       <property>
-            <name>hadoop.http.staticuser.use</name> 
-            <value>e3base</value>
-       </property>
-       <property>
-            <name>hadoop.user.group.static.mapping.overrides</name>
-            <value>e3base=CSD;</value>
-       </property>
-       <property>
-            <name>hadoop.tmp.dir</name>
-            <value>/chunk/hadoop/tmp/hadoop-${user.name}</value>
-       </property>
-       <property>
-            <name>io.native.lib.available</name>
-            <value>true</value>
-       </property>
-       <property>
-            <name>io.compression.codecs</name>
-            <value>org.apache.hadoop.io.compress.SnappyCodec</value>
-       </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://drmcluster</value>
+    </property>
+    <property>
+        <name>ha.zookeeper.quorum</name>
+        <value>172.18.231.19:11001,172.18.231.20:11001,172.18.231.22:11001</value>
+    </property>
+    <property> 
+        <name>hadoop.http.staticuser.user</name> 
+        <value>e3base</value> 
+    </property>
+    <property>
+        <name>hadoop.user.group.static.mapping.overrides</name>
+        <value>e3base=PAAS;</value>
+    </property> 
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/tmp/hadoop-${user.name}</value>
+   </property>
+    <property>
+        <name>topology.script.file.name</name>
+        <value>/paas/e3base/hadoop/etc/hadoop/topology.sh</value>
+    </property> 
+    <property>
+        <name>hadoop.proxyuser.e3base.hosts</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.e3base.groups</name>
+        <value>*</value>
+    </property>   
+    <property>  
+        <name>httpfs.proxyuser.e3base.hosts</name>  
+        <value>*</value>  
+    </property>  
+    <property>  
+        <name>httpfs.proxyuser.e3base.groups</name>  
+        <value>*</value>  
+    </property>
+    <property>
+        <name>io.native.lib.available</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>io.compression.codecs</name>
+        <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+    <property>
+        <name>fs.trash.interval</name>
+        <value>180</value>
+    </property>
+    <property>
+        <name>fs.trash.checkpoint.interval</name>
+        <value>120</value>
+    </property>           
 </configuration>

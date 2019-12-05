@@ -1,6 +1,7 @@
 package com.spring4all.spring.boot.starter.hbase.boot;
 
 import com.spring4all.spring.boot.starter.hbase.api.HbaseTemplate;
+import com.spring4all.spring.boot.starter.hbase.constant.HbaseConstants;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,6 @@ import java.util.Map;
 @EnableConfigurationProperties(HbaseProperties.class)
 @ConditionalOnClass(HbaseTemplate.class)
 public class HbaseAutoConfiguration {
-
-    private static final String HBASE_QUORUM = "hbase.zookeeper.quorum";
-    private static final String HBASE_PORT = "hbase.zookeeper.property.clientPort";
-    private static final String HBASE_ROOTDIR = "hbase.rootdir";
-    private static final String HBASE_ZNODE_PARENT = "zookeeper.znode.parent";
-
-
     @Autowired
     private HbaseProperties hbaseProperties;
 
@@ -44,11 +38,11 @@ public class HbaseAutoConfiguration {
                 configuration.addResource(resource);
             }
         } else {
-            configuration.set(HBASE_QUORUM, hbaseProperties.getQuorum());
-            configuration.set(HBASE_PORT, hbaseProperties.getPort());
-            configuration.set(HBASE_ROOTDIR, hbaseProperties.getRootDir());
+            configuration.set(HbaseConstants.HBASE_QUORUM, hbaseProperties.getQuorum());
+            configuration.set(HbaseConstants.HBASE_PORT, hbaseProperties.getPort());
+            configuration.set(HbaseConstants.HBASE_ROOTDIR, hbaseProperties.getRootDir());
             if (StringUtils.hasText(hbaseProperties.getNodeParent())) {
-                configuration.set(HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
+                configuration.set(HbaseConstants.HBASE_ZNODE_PARENT, hbaseProperties.getNodeParent());
             }
 
             if (!CollectionUtils.isEmpty(hbaseProperties.getConfig())) {
@@ -56,6 +50,10 @@ public class HbaseAutoConfiguration {
                     configuration.set(entry.getKey(), entry.getValue());
                 }
             }
+        }
+
+        if (StringUtils.hasText(hbaseProperties.getNamespace())) {
+            configuration.set(HbaseConstants.HBASE_NAMESPACE, hbaseProperties.getNamespace());
         }
         return new HbaseTemplate(configuration);
     }

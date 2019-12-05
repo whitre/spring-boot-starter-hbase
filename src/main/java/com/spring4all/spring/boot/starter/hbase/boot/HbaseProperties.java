@@ -27,6 +27,8 @@ public class HbaseProperties {
 
     private List<String> resources;
 
+    private String namespace;
+
     public String getQuorum() {
         return quorum;
     }
@@ -73,5 +75,13 @@ public class HbaseProperties {
 
     public void setResources(List<String> resources) {
         this.resources = resources;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
 }

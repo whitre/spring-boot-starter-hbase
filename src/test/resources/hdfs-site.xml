@@ -1,113 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?> 
-<configuration>
-    <property>
-        <name>dfs.nameservices</name>
-        <value>drmcluster</value>
+<configuration> 
+    <property> 
+        <name>dfs.nameservices</name> 
+        <value>drmcluster</value> 
     </property>
-    <property>
-        <name>dfs.ha.namenodes.drmcluster</name>
-        <value>nn1,nn2</value>
+    <property> 
+        <name>dfs.namenode.nn1.hostname</name> 
+        <value>172.18.231.19</value> 
+    </property>  
+    <property> 
+        <name>dfs.namenode.nn2.hostname</name> 
+        <value>172.18.231.20</value> 
     </property>
-    <property>
-        <name>dfs.namenode.rpc-address.drmcluster.nn1</name>
-        <value>e3base1:8020</value>
-    </property>
-    <property>
-        <name>dfs.namenode.rpc-address.drmcluster.nn2</name>
-        <value>e3base2:8020</value>
-    </property>
-    <!--
-        <property>
-            <name>dfs.namenode.servicerpc-address.drmcluster.nn1</name>
-            <value>e3base-manage1:53310</value>
-        </property>
-        <property>
-            <name>dfs.namenode.servicerpc-address.drmcluster.nn2</name>
-            <value>e3base-manage2:53310</value>
-    </property>
-    -->
-    <property>
-        <name>dfs.namenode.http-address.drmcluster.nn1</name>
-        <value>e3base1:50070</value>
-    </property>
-    <property>
-        <name>dfs.namenode.http-address.drmcluster.nn2</name>
-        <value>e3base2:50070</value>
-    </property>
-    <property>
-        <name>dfs.datanode.http.address</name>
-        <value>0.0.0.0:50075</value>
-    </property>
-    <property>
-        <name>dfs.journalnode.rpc-address</name>
-        <value>0.0.0.0:8485</value>
-    </property>
-    <property>
-        <name>dfs.journalnode.http-address</name>
-        <value>0.0.0.0:8480</value>
-    </property>
-    <property>
-        <name>dfs.namenode.shared.edits.dir</name>
-        <value>qjournal://e3base1:8485;e3base2:8485;e3base3:8485/drmcluster</value>
-    </property>
-    <property>
-        <name>dfs.journalnode.edits.dir</name>
-        <value>/chunk/hadoop/xx/jn</value>
-    </property>
-    <property>
-        <name>dfs.ha.automatic-failover.enabled</name>
-        <value>true</value>
-    </property>
-    <property>
-        <name>dfs.client.failover.proxy.provider.drmcluster</name>
-        <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
-    </property>
-    <property>
-        <name>dfs.ha.zkfc.port</name>
-        <value>8039</value>
+    <property> 
+        <name>dfs.namenode.shared.edits.dir</name> 
+        <value>qjournal://172.18.231.19:12007;172.18.231.20:12007;172.18.231.22:12007/drmcluster</value> 
     </property> 
-    <property>
-        <name>dfs.ha.fencing.methods</name>
-        <value>sshfence</value>
+    <property> 
+        <name>dfs.journalnode.edits.dir</name> 
+        <value>/paas/e3base/e3-info/hadoop/jn</value> 
+    </property>
+    <property> 
+        <name>dfs.namenode.name.dir</name> 
+        <value>file:///paas/e3base/e3-info/hadoop/nn</value> 
+    </property>
+    <property> 
+        <name>dfs.datanode.data.dir</name> 
+        <value>/paas/data01</value> 
+    </property>  
+    <property> 
+        <name>dfs.ha.namenodes.drmcluster</name> 
+        <value>nn1,nn2</value> 
     </property>
     <property>
         <name>dfs.ha.fencing.ssh.private-key-files</name>
-        <value>/chunk/.ssh/id_rsa</value>
+        <value>/paas/e3base/.ssh/id_rsa</value>
     </property>
     <property>
-        <name>ha.zookeeper.session-timeout.ms</name>
-        <value>5000</value>
+        <name>dfs.hosts.exclude</name>
+        <value>/paas/e3base/hadoop/etc/hadoop/dn-exclude</value>
     </property>
     <property>
-        <name>dfs.namenode.name.dir</name>
-        <value>file:///chunk/hadoop/xx/nn</value>
+        <name>dfs.hosts</name>
+        <value>/paas/e3base/hadoop/etc/hadoop/dn-include</value>
+    </property>
+    <property> 
+        <name>dfs.namenode.rpc-address.drmcluster.nn1</name> 
+        <value>${dfs.namenode.nn1.hostname}:12001</value> 
+    </property>
+    <property> 
+        <name>dfs.namenode.rpc-address.drmcluster.nn2</name> 
+        <value>${dfs.namenode.nn2.hostname}:12001</value> 
+    </property>
+    <property>
+        <name>dfs.namenode.servicerpc-address.drmcluster.nn1</name>
+        <value>${dfs.namenode.nn1.hostname}:12002</value>
+    </property>
+    <property>
+        <name>dfs.namenode.servicerpc-address.drmcluster.nn2</name>
+        <value>${dfs.namenode.nn2.hostname}:12002</value>
+    </property>
+    <property> 
+        <name>dfs.namenode.http-address.drmcluster.nn1</name> 
+        <value>${dfs.namenode.nn1.hostname}:12003</value> 
+    </property>
+    <property> 
+        <name>dfs.namenode.http-address.drmcluster.nn2</name> 
+        <value>${dfs.namenode.nn2.hostname}:12003</value> 
+    </property>
+    <property>
+        <name>dfs.namenode.servicerpc-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>dfs.namenode.rpc-bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>dfs.datanode.http.address</name> 
+        <value>0.0.0.0:12004</value> 
+    </property>
+    <property>
+        <name>dfs.datanode.address</name>
+        <value>0.0.0.0:12005</value>
     </property> 
     <property>
-        <name>dfs.datanode.data.dir</name>
-        <value>file:///chunk/hadoop/xx/dn</value>
+        <name>dfs.datanode.ipc.address</name>
+        <value>0.0.0.0:12006</value>
     </property>
-    <!-- hue -->
+    <property> 
+        <name>dfs.journalnode.rpc-address</name> 
+        <value>0.0.0.0:12007</value> 
+    </property>
+    <property> 
+        <name>dfs.journalnode.http-address</name> 
+        <value>0.0.0.0:12008</value> 
+    </property>
+    <property> 
+        <name>dfs.ha.automatic-failover.enabled</name> 
+        <value>true</value> 
+    </property>
+    <property> 
+        <name>dfs.client.failover.proxy.provider.drmcluster</name> 
+        <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value> 
+    </property> 
+    <property> 
+        <name>dfs.ha.zkfc.port</name> 
+        <value>12009</value> 
+    </property>
     <property>
-        <name>dfs.webhdfs.enabled</name>
-        <value>true</value>
+        <name>dfs.ha.fencing.methods</name>
+        <value>sshfence
+               shell(/bin/true)</value>
     </property>
+    <property> 
+        <name>ha.zookeeper.session-timeout.ms</name> 
+        <value>5000</value> 
+    </property> 
+    <!-- hue -->
+    <property> 
+        <name>dfs.webhdfs.enabled</name> 
+        <value>true</value> 
+    </property>
+    <!-- simple security  -->
+    <property> 
+        <name>dfs.permissions.enabled</name> 
+        <value>true</value> 
+    </property> 
+    <property> 
+        <name>dfs.permissions.superusergroup</name> 
+        <value>supergroup</value> 
+    </property> 
     <property>
         <name>dfs.namenode.acls.enabled</name>
         <value>true</value>
-    </property>
-    <!-- simple security  -->
-    <property>
-        <name>dfs.permissions</name>
-        <value>false</value>
-    </property>
-    <property>
-        <name>dfs.permissions.enabled</name>
-        <value>false</value>
-    </property>
-    <property>
-        <name>dfs.permissions.superusergroup</name>
-        <value>supergroup</value>
     </property>
     <property>
         <name>dfs.replication</name>
@@ -117,58 +144,60 @@
         <name>dfs.blocksize</name>
         <value>256m</value>
     </property>
-    <property>
-        <name>io.file.buffer.size</name>
-        <value>131072</value>
+    <property> 
+        <name>io.file.buffer.size</name> 
+        <value>131072</value> 
     </property>
-    <property>
-         <name>fs.trash.interval</name>
-         <value>10080</value>
+    <property> 
+        <name>dfs.socket.timeout</name> 
+        <value>90000</value> 
+    </property> 
+    <property> 
+        <name>dfs.datanode.balance.bandwidthPerSec</name> 
+        <value>62914560</value> 
+    </property> 
+    <!--
+    <property> 
+        <name>dfs.datanode.du.reserved</name> 
+        <value>53687091200</value> 
+    </property>  
+    -->
+    <property> 
+        <name>dfs.ha.fencing.ssh.connect-timeout</name> 
+        <value>30000</value> 
     </property>
-    <property>
-        <name>dfs.socket.timeout</name>
-        <value>90000</value>
+    <property> 
+        <name>ha.failover-controller.cli-check.rpc-timeout.ms</name> 
+        <value>60000</value> 
     </property>
-    <property>
-        <name>dfs.balance.bandwidthPerSec</name>
-        <value>31457280</value>
+    <property> 
+        <name>ipc.client.connect.timeout</name> 
+        <value>60000</value> 
     </property>
-    <property>
-        <name>dfs.ha.fencing.ssh.connect-timeout</name>
-        <value>30000</value>
+    <property> 
+        <name>dfs.image.transfer.bandwidthPerSec</name> 
+        <value>41943040</value> 
     </property>
-    <property>
-        <name>ha.failover-controller.cli-check.rpc-timeout.ms</name>
-        <value>60000</value>
-    </property>
-    <property>
-        <name>ipc.client.connect.timeout</name>
-        <value>60000</value>
-    </property>
-    <property>
-        <name>dfs.image.transfer.bandwidthPerSec</name>
-        <value>41943040</value>
-    </property>
-    <property>
-        <name>dfs.namenode.accesstime.precision</name>
-        <value>3600000</value>
-    </property>
-    <property>
-        <name>fs.file.impl</name>
-        <value>org.apache.hadoop.fs.LocalFileSystem</value>
-    </property>
-    <property>
-        <name>fs.hdfs.impl</name>
-        <value>org.apache.hadoop.hdfs.DistributedFileSystem</value>
-    </property>
-    <property>
-        <name>dfs.client.read.shortcircuit</name>
-        <value>true</value>
-    </property>
+    <property> 
+        <name>dfs.namenode.accesstime.precision</name> 
+        <value>3600000</value> 
+    </property> 
+    <property> 
+        <name>fs.file.impl</name> 
+        <value>org.apache.hadoop.fs.LocalFileSystem</value> 
+    </property> 
+    <property> 
+        <name>fs.hdfs.impl</name> 
+        <value>org.apache.hadoop.hdfs.DistributedFileSystem</value> 
+    </property> 
+    <property> 
+        <name>dfs.client.read.shortcircuit</name> 
+        <value>true</value> 
+    </property> 
     <property>
         <name>dfs.domain.socket.path</name>
-        <value>/chunk/hadoop/run/hadoop-hdfs/dn._PORT</value>
-    </property>
+        <value>/var/run/hadoop-hdfs/dn._PORT</value>
+    </property>    
     <property>
         <name>dfs.client.file-block-storage-locations.timeout.millis</name>
         <value>10000</value>
@@ -194,15 +223,44 @@
         <value>e3base</value>
     </property>
     <property>
-         <name>dfs.namenode.handler.count</name>
-         <value>30</value>
+        <name>dfs.namenode.handler.count</name>
+        <value>100</value>
     </property>
     <property>
-         <name>dfs.datanode.handler.count</name>
-         <value>30</value>
+        <name>dfs.datanode.handler.count</name>
+        <value>400</value>
     </property>
     <property>
-         <name>dfs.datanode.max.transfer.threads</name>
-         <value>2048</value>
+        <name>dfs.datanode.max.transfer.threads</name>
+        <value>8192</value>
+    </property>
+    <property>
+        <name>dfs.namenode.num.extra.edits.retained</name>
+        <value>20</value>
+    </property>
+    <property>
+        <name>dfs.namenode.max.extra.edits.segments.retained</name>
+        <value>20</value>
+    </property>
+    <property>
+        <name>dfs.datanode.socket.write.timeout</name>
+        <value>960000</value>
+    </property>
+    <property>
+        <name>dfs.client.socket-timeout</name>
+        <value>960000</value>
+    </property>
+    <property>
+        <name>dfs.datanode.fsdataset.volume.choosing.policy</name>
+        <value>org.apache.hadoop.hdfs.server.datanode.fsdataset.AvailableSpaceVolumeChoosingPolicy</value>  
+    </property>
+    <property>
+        <name>dfs.datanode.balance.max.concurrent.moves</name>
+        <value>50</value>
+    </property>
+
+    <property>
+        <name>hadoop.native.lib</name>
+        <value>true</value>
     </property>
 </configuration>
